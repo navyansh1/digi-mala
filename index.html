@@ -257,7 +257,7 @@
     <button class="sound-toggle" onclick="toggleSound()" id="soundToggle">🔊</button>
     
     <div class="container">
-        <h1 class="title">Digital Mala</h1>
+        <h1 class="title">Digi Mala 📿</h1>
         
         <div class="mala-container" onclick="clickBead()">
             <div class="mala-circle" id="malaCircle">
@@ -266,15 +266,14 @@
             
             <div class="center-button">
                 <div class="count" id="count">0</div>
-                <div class="mantra">जाप</div>
+                <div class="mantra">जाप ॐ</div>
             </div>
         </div>
     </div>
 
     <div class="completion-modal" id="completionModal">
         <div class="modal-content">
-            <h2 class="modal-title">🙏 Jaap Complete!</h2>
-            <p>108 repetitions completed.</p>
+            <h2 class="modal-title">Jaap Complete! 📿</h2>
             <div class="modal-buttons">
                 <button class="btn btn-primary" onclick="startNewJaap()">Start Another Jaap</button>
                 <button class="btn btn-secondary" onclick="startOver()">Start Over</button>
@@ -307,14 +306,17 @@
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
             
-            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
+            // Very subtle, soft tone
+            oscillator.frequency.setValueAtTime(880, audioContext.currentTime); // A note
+            oscillator.type = 'sine';
             
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            // Very gentle and quiet
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.05, audioContext.currentTime + 0.01); // Very low volume
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.08);
             
             oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
+            oscillator.stop(audioContext.currentTime + 0.08);
         }
 
         function playCompletionSound() {
